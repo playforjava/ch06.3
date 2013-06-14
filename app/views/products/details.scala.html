@@ -1,0 +1,38 @@
+@(productForm: Form[Product])
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Product form") {
+  <h1>Product form</h1>
+  @helper.form(action = routes.Products.save(), 'enctype -> "multipart/form-data") {
+    <fieldset>
+      <legend>Product (@productForm("name").valueOr("New"))</legend>
+      @helper.inputText(productForm("ean"))
+      @helper.inputText(productForm("name"))
+      @helper.textarea(productForm("description"))
+      @helper.inputFile(productForm("picture"))
+      @if(!productForm("picture").valueOr("").isEmpty()) {
+      <img src="@routes.Products.picture(productForm("ean").value)"/>
+      }
+
+
+<div class="control-group">
+  <div class="controls">
+    <input name="tags[0].id" value="1" type="checkbox"
+    @for(i <- 0 to 2) {
+      @if(productForm("tags[" + i + "].id").value=="1"){ checked }
+    }> lightweight
+    <input name="tags[1].id" value="2" type="checkbox"
+    @for(i <- 0 to 2) {
+      @if(productForm("tags[" + i + "].id").value=="2"){ checked }
+    }> metal
+    <input name="tags[2].id" value="3" type="checkbox"
+    @for(i <- 0 to 2) {
+      @if(productForm("tags[" + i + "].id").value=="3"){ checked }
+    }> plastic
+  </div>
+</div>
+    </fieldset>
+    <input type="submit" class="btn btn-primary">
+  }
+}
