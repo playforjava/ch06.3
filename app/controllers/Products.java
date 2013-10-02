@@ -17,6 +17,7 @@ import java.util.Set;
 
 import static play.mvc.Http.MultipartFormData;
 
+@With(CatchAction.class)
 public class Products extends Controller {
 
   private static final Form<Product> productForm = Form.form(Product.class);
